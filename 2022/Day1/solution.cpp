@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
     if (argc != 2)
     {
         printf("Usage: %s <filename>\n", argv[0]);
+        return -1;
     }
 
     list<int> elfCalories;
@@ -42,7 +43,9 @@ int main(int argc, char *argv[])
     if (!inputFile.is_open())
     {
         printf("Failed to open the input file!\n");
+        return -1;
     }
+
 
     while (getline(inputFile, line))
     {
