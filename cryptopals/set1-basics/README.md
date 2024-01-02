@@ -12,8 +12,7 @@ So go ahead and make that happen. You'll need to use this code for the rest of t
 
 **Always operate on raw bytes, never on encoded strings. Only use hex and base64 for pretty-printing.** 
 
-
-### Fixed XOR 
+### Fixed XOR  
 ### Single-byte XOR cipher
 ### Detect single-character XOR
 ### Implement repeating-key XOR
