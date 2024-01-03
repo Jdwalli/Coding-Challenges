@@ -3,6 +3,7 @@
 Repository full of my "solutions" to different coding challenges and events. Mainly for practice. 
 
 - [Advent of Code](https://github.com/Jdwalli/coding-challenges/tree/master/advent-of-code/)
+- [Cryptohack](https://github.com/Jdwalli/coding-challenges/tree/master/cryptohack/)
 - [Cryptopals](https://github.com/Jdwalli/coding-challenges/tree/master/cryptopals/)
 - [Project Euler](https://github.com/Jdwalli/coding-challenges/tree/master/project-euler/)
 
