@@ -2,9 +2,6 @@ from base64 import b64encode
 from Crypto.Util.number import *
 
 
-
-
-
 if __name__ == "__main__":
 	# ASCII is a 7-bit encoding standard which allows the representation of text using the integers 0-127.
 	# Using the below integer array, convert the numbers to their corresponding ASCII characters to obtain a flag.
@@ -93,3 +90,4 @@ if __name__ == "__main__":
 # Convert the following integer back into a message:
 
 # 11515195063862318899931685488813747395775516287289682636499965282714637259206269
+	
