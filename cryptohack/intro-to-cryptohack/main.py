@@ -1,93 +1,76 @@
 from base64 import b64encode
 from Crypto.Util.number import *
+from pwn import xor
+
+
+def ascii_arr_to_text(arr: list) -> str:
+	valid = ''
+	for element in arr:
+		valid += chr(element)
+	return valid
+
+def decode_hex(data: str) -> str:
+	# Create a bytes object from a string of hexadecimal numbers
+	hex = bytes.fromhex(data)
+	# Decode the bytes using the codec registered for encoding and return.
+	return hex.decode()
+
+def decode_b64(data: str) -> str:
+	hex = bytes.fromhex(data)
+	return b64encode(hex).decode()
+
+def decode_bytes_and_big_integers(data: int) -> str:
+	return long_to_bytes(data).decode()
+
+def xor_starter(data: str) -> str:
+	new_text = ''
+	for char in data:
+		new_text += chr(ord(char) ^ 13)
+	return new_text
+
+def xor_properties() -> str:
+	key1_raw = bytes.fromhex("a6c8b6733c9b22de7bc0253266a3867df55acde8635e19c73313")
+	key2_raw = "37dcb292030faa90d07eec17e3b1c6d8daf94c35d4c9191a5e1e"
+	key3_raw = "c1545756687e7573db23aa1c3452a098b71a7fbf0fddddde5fc1"
+	flag_raw = "04ee9855208a2cd59091d04767ae47963170d1660df7f56f5faf"
+
+	key2_solved = xor(bytes.fromhex(key2_raw), key1_raw)
+	key3_solved = xor(bytes.fromhex(key3_raw), key2_solved)
+	partial_flag = xor(bytes.fromhex(key2_raw), key3_solved)
+
+	flag = xor(bytes.fromhex(flag_raw), partial_flag)
+	return flag.decode()
+
+def favourite_byte(data: str) -> str:
+	bytearr = bytearray.fromhex(data)
+
+	for byte_value in range(256):
+		results = [chr(b ^ byte_value) for b in bytearr]
+		flag = "".join(results)
+		if flag.startswith("crypto"):
+			return f"Byte {byte_value}: {flag}"
+
+	pass
+
+	
+	
 
 
 if __name__ == "__main__":
-	# ASCII is a 7-bit encoding standard which allows the representation of text using the integers 0-127.
-	# Using the below integer array, convert the numbers to their corresponding ASCII characters to obtain a flag.
 	int_arr = [99, 114, 121, 112, 116, 111, 123, 65, 83, 67, 73, 73, 95, 112, 114, 49, 110, 116, 52, 98, 108, 51, 125]
- 	# In Python, the chr() function can be used to convert an ASCII ordinal number to a character (the ord() function does the opposite).
-	valid = ''
-	for element in int_arr:
-		valid += chr(element)
-		
-	print(valid)
-
-	decoder = bytes.fromhex("63727970746f7b596f755f77696c6c5f62655f776f726b696e675f776974685f6865785f737472696e67735f615f6c6f747d")
-
-	print(decoder.decode())
-
-
-	decoder = bytes.fromhex("72bca9b68fc16ac7beeb8f849dca1d8a783e8acf9679bf9269f7bf")
-	print(b64encode(decoder).decode())
-
-	print(long_to_bytes(11515195063862318899931685488813747395775516287289682636499965282714637259206269).decode())
-
-	lst = []
-	thirteen_binary = bin(13).replace("0b", "") 
-	new_text = ''
-
-
-	for char in 'label':
-
-		new_text += chr(ord(char) ^ 13)
-
-
-	print(new_text)
+	print(ascii_arr_to_text(int_arr))
+	hex_data = "63727970746f7b596f755f77696c6c5f62655f776f726b696e675f776974685f6865785f737472696e67735f615f6c6f747d"
+	print(decode_hex(hex_data))
+	hex_data = "72bca9b68fc16ac7beeb8f849dca1d8a783e8acf9679bf9269f7bf"
+	print(decode_b64(hex_data))
+	message = 11515195063862318899931685488813747395775516287289682636499965282714637259206269
+	print(decode_bytes_and_big_integers(message))
+	message = "label"
+	print(xor_starter(message))
+	print(xor_properties())
+	print(favourite_byte("73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d"))
 	
 
 
 
 
-
-
-
-	# e can XOR integers by first converting the integer from decimal to binary. We can XOR strings by first converting each character to the integer representing the Unicode character.
-
-
-
-	
-
-
-
-# When we encrypt something the resulting ciphertext commonly has bytes which are not printable ASCII characters. If we want to share our encrypted data, it's common to encode it into something more user-friendly and portable across different systems.
-
-# Hexadecimal can be used in such a way to represent ASCII strings. First each letter is converted to an ordinal number according to the ASCII table (as in the previous challenge). Then the decimal numbers are converted to base-16 numbers, otherwise known as hexadecimal. The numbers can be combined together, into one long hex string.
-
-# Included below is a flag encoded as a hex string. Decode this back into bytes to get the flag.
-
-# 63727970746f7b596f755f77696c6c5f62655f776f726b696e675f776974685f6865785f737472696e67735f615f6c6f747d
-
-#  In Python, the bytes.fromhex() function can be used to convert hex to bytes. The .hex() instance method can be called on byte strings to get the hex representation.
-	
-
-# 	Another common encoding scheme is Base64, which allows us to represent binary data as an ASCII string using an alphabet of 64 characters. One character of a Base64 string encodes 6 binary digits (bits), and so 4 characters of Base64 encode three 8-bit bytes.
-
-# Base64 is most commonly used online, so binary data such as images can be easily included into HTML or CSS files.
-
-# Take the below hex string, decode it into bytes and then encode it into Base64.
-
-# 72bca9b68fc16ac7beeb8f849dca1d8a783e8acf9679bf9269f7bf
-
-#  In Python, after importing the base64 module with import base64, you can use the base64.b64encode() function. Remember to decode the hex first as the challenge description states.
-	
-
-# 	Cryptosystems like RSA works on numbers, but messages are made up of characters. How should we convert our messages into numbers so that mathematical operations can be applied?
-
-# The most common way is to take the ordinal bytes of the message, convert them into hexadecimal, and concatenate. This can be interpreted as a base-16/hexadecimal number, and also represented in base-10/decimal.
-
-# To illustrate:
-
-# message: HELLO
-# ascii bytes: [72, 69, 76, 76, 79]
-# hex bytes: [0x48, 0x45, 0x4c, 0x4c, 0x4f]
-# base-16: 0x48454c4c4f
-# base-10: 310400273487
-
-#  Python's PyCryptodome library implements this with the methods bytes_to_long() and long_to_bytes(). You will first have to install PyCryptodome and import it with from Crypto.Util.number import *. For more details check the FAQ.
-
-
-# Convert the following integer back into a message:
-
-# 11515195063862318899931685488813747395775516287289682636499965282714637259206269
-	
