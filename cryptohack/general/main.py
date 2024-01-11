@@ -22,6 +22,10 @@ def decode_b64(data: str) -> str:
 def decode_bytes_and_big_integers(data: int) -> str:
 	return long_to_bytes(data).decode()
 
+
+def encoding_challenges():
+	pass
+
 def xor_starter(data: str) -> str:
 	new_text = ''
 	for char in data:
