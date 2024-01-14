@@ -38,11 +38,6 @@ Encoding Challenges
 
 
 ## XOR 
-## Mathematics 
-## Data Formats 
-
-
-
 
 XOR Starter
 
@@ -65,3 +60,24 @@ Associative means that a chain of operations can be carried out without order (w
 Something XOR'd with itself returns zero.
 
 Favourite byte
+
+
+## Mathematics 
+
+
+
+## Data Formats 
+
+Common Data Formats:
+
+PEM
+Popular format for sending keys, certificates, and other cryptographic material.
+```
+-----BEGIN RSA PUBLIC KEY-----
+MIIBCgKC... (a whole bunch of base64)
+-----END RSA PUBLIC KEY-----
+```
+
+It wraps base64-encoded data by a one-line header and footer to indicate how to parse the data within. Perhaps unexpectedly, it's important for there to be the correct number of hyphens in the header and footer, otherwise cryptographic tools won't be able to recognise the file.
+
+

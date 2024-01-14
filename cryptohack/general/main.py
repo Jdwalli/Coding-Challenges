@@ -1,6 +1,7 @@
 from base64 import b64encode
 from Crypto.Util.number import *
 from pwn import xor
+from Crypto.PublicKey import RSA
 
 
 def ascii_arr_to_text(arr: list) -> str:
@@ -57,6 +58,8 @@ def favourite_byte(data: str) -> str:
 	pass
 
 	
+def privacy_enhanced_mail(pem_formatted_key: str):
+	return RSA.importKey(pem_formatted_key).d
 	
 
 
@@ -73,6 +76,8 @@ if __name__ == "__main__":
 	print(xor_starter(message))
 	print(xor_properties())
 	print(favourite_byte("73626960647f6b206821204f21254f7d694f7624662065622127234f726927756d"))
+	pem_formatted_key = open("./assets/privacy_enhanced_mail.pem").read()
+	print(privacy_enhanced_mail(pem_formatted_key))
 	
 
 
