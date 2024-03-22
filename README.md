@@ -1,9 +1,7 @@
 # Coding Challenges
 
-Repository full of my "solutions" to different coding challenges and events. Mainly for practice. 
+My working solutions to different coding challenges and events
 
 - [Advent of Code](https://github.com/Jdwalli/coding-challenges/tree/master/advent-of-code/)
-- [Cryptohack](https://github.com/Jdwalli/coding-challenges/tree/master/cryptopals/)
-- [Cryptopals](https://github.com/Jdwalli/coding-challenges/tree/master/cryptopals/)
 - [Project Euler](https://github.com/Jdwalli/coding-challenges/tree/master/project-euler/)
 
